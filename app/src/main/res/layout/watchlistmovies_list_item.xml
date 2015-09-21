@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Layout for weather forecast list item for future day (not today) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:background="@drawable/list_row_selector"
+    >
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/thumbnail_watchlist_movies"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="-10dp"
+        />
+
+    <!--  <ImageView
+          android:id="@+id/list_item_icon_popular_series"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>  -->
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="0dp">
+
+        <TextView
+            android:id="@+id/list_item_movie_watchlist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/title"
+            android:textStyle="bold"
+
+            />
+
+        <TextView
+            android:id="@+id/list_item_movie_watchlist_reldate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/popularity"
+            android:textStyle="italic"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/list_item_movie_watchlist_watched"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/follow"
+            />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:id="@+id/checkbox_watchlist_movies"
+            android:saveEnabled="false"
+            style="@style/Base.Theme.AppCompat"
+             />
+
+    </LinearLayout>
+
+</LinearLayout>
