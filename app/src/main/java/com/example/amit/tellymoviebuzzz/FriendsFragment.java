@@ -54,6 +54,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -107,8 +108,10 @@ public class FriendsFragment extends Fragment {
     // must change.
 
     public int count=0;
-    private ArrayList<Followers> frndlist = new ArrayList<Followers>();
-    private ArrayList<Followers> frndlist_new = new ArrayList<Followers>();
+    //private ArrayList<Followers> frndlist = new ArrayList<Followers>();
+    //private ArrayList<Followers> frndlist_new = new ArrayList<Followers>();
+    private ArrayList<Followers> frndlist; // = null;
+    private ArrayList<Followers> frndlist_new = null;
     static final int COL_TMDB_ID = 0;
     static final int COL_TMDBID = 1;
     static final int COL_IMDBID = 2;
@@ -152,6 +155,8 @@ public class FriendsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
+       // mForecastAdapter.clear();
+       // mForecastAdapter.notifyDataSetChanged();
 
     }
 
@@ -244,65 +249,150 @@ public class FriendsFragment extends Fragment {
     public void onResume() {
         super.onResume();
       //  listView.setAdapter(mForecastAdapter);
+        //frndlist = null;
+        //frndlist_new = null;
+        frndlist = new ArrayList<Followers>();
+      //  for(int i=0; i <frndlist.size(); i++)
+       // {
+       //     Log.e("for loop in on resume","on resume frndlist size"+frndlist.get(i).getid());
+       //     Log.e("for loop in on resume","on resume frndlist size"+frndlist.size());
+       // }
+        Log.e("in on resume","on resume frndlist size"+frndlist.size());
+        Log.e("in on resume","on resume frndlist size"+frndlist.size());
+        Log.e("in on resume","on resume frndlist size"+frndlist.size());
+        Log.e("in on resume","on resume frndlist size"+frndlist.size());
+
         frndlist_new = findfriendsfast();
     }
 
     private String hell;
 
     private ArrayList<Followers> findfriendsfast(){
+      /*      if(frndlist != null ) {
+                frndlist = null;
+                Log.e("Here in first if","jknsdksejnd");
+                Log.e("Here in first if","jknsdksejnd");
+                Log.e("Here in first if","jknsdksejnd");Log.e("Here in first if","jknsdksejnd");
 
-            frndlist = new ArrayList<Followers>();
+            }  */
+           // frndlist = new ArrayList<Followers>();
+              //  for(int i=0; i <frndlist.size(); i++)
+              //  {
+              //      Log.e("for loop in findfrineds","on resume frndlist size"+frndlist.get(i).getid());
+               //     Log.e("for loop in findfrineds","on resume frndlist size"+frndlist.size());
+               // }
+                Log.e("in findfriendfast","on resume frndlist size"+frndlist.size());
+                Log.e("in findfriendfast","on resume frndlist size"+frndlist.size());
+                Log.e("in findfriendfast","on resume frndlist size"+frndlist.size());
+                Log.e("in findfriendfast","on resume frndlist size"+frndlist.size());
 
 
-                      final ParseObject followers = new ParseObject("Follow");
+        final ParseObject followers = new ParseObject("Follow");
                                                 //    followers.put("follower", 1337);
                                              //    followers.put("playerName", "Sean Plott");
 
                   final ParseUser user1 = ParseUser.getCurrentUser();
                                               //  final String followingid1 = c.optString("id");
                                               //  final String followingname1 = c.optString("name");
-                 ParseQuery<ParseObject> query1 = ParseQuery.getQuery("Follow");
-                query1.whereEqualTo("follower",user1.get("fbid").toString());
-        // query1.whereEqualTo("following",c.optString("id"));
-                query1.fromLocalDatastore();
-                query1.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, com.parse.ParseException e) {
-                if(list!=null) {
-                    for (int i = 0; i < list.size(); i++) {
 
-                        ParseObject obj = list.get(i);
-                       // obj.saveEventually();
-                        String followingid = obj.get("following").toString();
-                        boolean bool = obj.getBoolean("isfollowing");
-                        String followingname1 = obj.get("namefollowing").toString();
-                        String url = obj.get("picture").toString();
-                       // String url =  "http://graph.facebook.com" + File.separator
-                       //         + String.valueOf(followingid) + File.separator + "picture?type=large&redirect=false";
+        if(user1 != null && user1.get("fbid") != null) {
+            Log.e("user error", "in if");
+            Log.e("user error", "in if");
+            Log.e("user error", "in if");
+            Log.e("user error", "in if");
+
+            ParseQuery<ParseObject> query1 = ParseQuery.getQuery("Follow");
+            query1.whereEqualTo("follower", user1.get("fbid").toString());
+            // query1.whereEqualTo("following",c.optString("id"));
+            query1.fromLocalDatastore();
+            query1.findInBackground(new FindCallback<ParseObject>() {
+                List<String> newlist;
+                @Override
+                public void done(List<ParseObject> list, com.parse.ParseException e) {
+
+                    newlist = new ArrayList<String>();
+                            //String));
 
 
 
-                      //  followers.put("picture",output);
+                    if (list != null) {
+                        for (int i = 0; i < list.size(); i++) {
+                            Log.e("List Size","list size "+list.size());
+                            Log.e("List Size","list size "+list.size());
+                            Log.e("List Size","list size "+list.size());
+                            ParseObject obj = list.get(i);
+                            // obj.saveEventually();
 
-                        Followers f = new Followers(followingid, followingname1, bool,url);
-                        if (f != null) {
-                            frndlist.add(f);
-                            if (getActivity() != null) {
+                            String followingid = obj.get("following").toString();
+                            if(newlist.contains(followingid) == false) {
+                                newlist.add(followingid);
 
-                                mForecastAdapter = new FriendsAdapter(getActivity(), frndlist);
-                                mForecastAdapter.notifyDataSetChanged();
-                                listView.setAdapter(mForecastAdapter);
+                                boolean bool = obj.getBoolean("isfollowing");
+                                String followingname1 = obj.get("namefollowing").toString();
+                                String url = obj.get("picture").toString();
+                                // String url =  "http://graph.facebook.com" + File.separator
+                                //         + String.valueOf(followingid) + File.separator + "picture?type=large&redirect=false";
+
+
+                                //  followers.put("picture",output);
+
+                                Followers f = new Followers(followingid, followingname1, bool, url);
+                                if (f != null) {
+
+                                    //    for(int gf =0; gf <frndlist.size(); i++)
+                                    //   {
+                                    //      Log.e("for loop in f! =null","on resume frndlist size"+frndlist.get(gf).getid());
+                                    //      Log.e("for loop in f! =null","on resume frndlist size"+frndlist.size());
+                                    // }
+
+                                    if (frndlist.contains(f.getid()) != true) {
+
+                                        frndlist.add(f);
+                                        //  for(int gf =0; gf <frndlist.size(); i++)
+                                        //  {
+                                        //    Log.e("for loop in frn add","on resume frndlist size"+frndlist.get(gf).getid());
+                                        Log.e("for loop in in frn add", "on resume frndlist size" + frndlist.size());
+                                        //  }
+                                    } else if (frndlist.contains(f.getid()) == true) {
+                                        Log.e("in else", "in else for contains");
+                                        Log.e("in else", "in else for contains");
+                                        Log.e("in else", "in else for contains");
+                                        Log.e("in else", "in else for contains");
+                                        Log.e("in else", "in else for contains");
+
+                                    }
+                                    if (getActivity() != null) {
+                                        Log.e("in if for frndList ", "here in if for frinedlist");
+                                        Log.e("in if for frndList ", "here in if for frinedlist");
+                                        Log.e("in if for frndList ", "here in if for frinedlist");
+                                        Log.e("in if for frndList ", "here in if for frinedlist" + frndlist.size());
+                                        Log.e("in if for frndList ", "here in if for frinedlist" + frndlist.size());
+                                        mForecastAdapter = new FriendsAdapter(getActivity(), frndlist);
+                                        mForecastAdapter.notifyDataSetChanged();
+                                        listView.setAdapter(mForecastAdapter);
+                                    }
+
+                                }
+
                             }
-
                         }
-
-
                     }
-                }
 
-            }
-        });
-        return frndlist;
+                }
+            });
+        }
+       /* if ( frndlist != null && getActivity() != null) {
+            Log.e("in if for frndList ", "here in if for frinedlist");
+            Log.e("in if for frndList ", "here in if for frinedlist");
+            Log.e("in if for frndList ", "here in if for frinedlist");
+            Log.e("in if for frndList ", "here in if for frinedlist"+frndlist.size());
+            Log.e("in if for frndList ", "here in if for frinedlist"+frndlist.size());
+            mForecastAdapter = new FriendsAdapter(getActivity(), frndlist);
+            mForecastAdapter.notifyDataSetChanged();
+            listView.setAdapter(mForecastAdapter);
+        }*/
+        return null;
+        //return frndlist;
     }
 
 

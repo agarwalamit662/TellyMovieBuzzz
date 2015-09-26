@@ -125,7 +125,7 @@ public class FriendsAdapter extends ArrayAdapter<Followers> {
            // viewHolder.follow.setBackground(followDrawable);
 
 
-            convertView.setTag(viewHolder);
+            //convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolderMovie) convertView.getTag();
         }
@@ -261,7 +261,7 @@ public class FriendsAdapter extends ArrayAdapter<Followers> {
 
 
 
-
+        convertView.setTag(viewHolder);
         return convertView;
     }
 

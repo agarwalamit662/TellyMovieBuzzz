@@ -365,7 +365,10 @@ public class FetchImdbThisYear extends AsyncTask<String, Void, Void> {
 
         final ParseUser user1 = ParseUser.getCurrentUser();
         ParseQuery<ParseObject> qry  = ParseQuery.getQuery("Watched");
-        qry.whereEqualTo("watcher",user1.get("fbid").toString());
+        if(user1.get("fbid") == null && user1.get("username") != null)
+            qry.whereEqualTo("watcher",user1.get("username").toString());
+        else
+            qry.whereEqualTo("watcher",user1.get("fbid").toString());
         // qry.whereEqualTo("movieid",movieid);
         qry.findInBackground(new FindCallback<ParseObject>() {
             @Override
